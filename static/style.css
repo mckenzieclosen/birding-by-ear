@@ -1,0 +1,112 @@
+:root {
+  --bg: #fbf6ec;          /* warm paper */
+  --surface: #fffdf8;
+  --text: #2a1f14;        /* deep brown: ~15:1 on bg */
+  --muted: #5a4a3a;       /* ~8:1 on bg */
+  --primary: #2f5a36;     /* forest green: ~7.5:1 with white */
+  --primary-text: #ffffff;
+  --accent: #9c3d12;      /* robin-breast rust, for recording state */
+  --border: #8a7660;
+  --focus: #1f4fd1;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1c1611; --surface: #2a221a; --text: #f6ecdf; --muted: #d8c8b4;
+    --primary: #9fd3a5; --primary-text: #10220f; --accent: #ffb38a;
+    --border: #a8937b; --focus: #9ec1ff; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1c1611; --surface: #2a221a; --text: #f6ecdf; --muted: #d8c8b4;
+  --primary: #9fd3a5; --primary-text: #10220f; --accent: #ffb38a;
+  --border: #a8937b; --focus: #9ec1ff; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+/* Author display rules (e.g. .big-btn) must never override the hidden attribute. */
+[hidden] { display: none !important; }
+html { font-size: 112.5%; } /* 18px base; scales with user zoom/settings */
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
+}
+header, main { max-width: 44rem; margin: 0 auto; padding: 0 1rem; }
+header { padding-top: 2rem; }
+h1 { font-family: Georgia, "Iowan Old Style", serif; font-size: 2.4rem; margin: 0 0 .25rem; }
+h2 { font-family: Georgia, "Iowan Old Style", serif; font-size: 1.5rem; margin: 0 0 1rem; }
+.tagline { font-size: 1.15rem; color: var(--muted); margin-top: 0; }
+section { background: var(--surface); border: 2px solid var(--border); border-radius: 1rem; padding: 1.25rem; margin: 1.25rem 0; }
+a { color: inherit; text-underline-offset: .2em; }
+
+.status {
+  font-size: 1.2rem; font-weight: 600;
+  border-left: .5rem solid var(--primary);
+  padding: .75rem 1rem; margin: 1.25rem 0;
+  background: var(--surface); border-radius: .5rem;
+  min-height: 3.5rem;
+}
+
+.actions { display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-start; }
+.upload { display: flex; flex-direction: column; }
+.big-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
+  min-height: 3.75rem; min-width: 12rem; padding: .75rem 1.5rem;
+  font: inherit; font-size: 1.2rem; font-weight: 700;
+  border-radius: 999px; border: 3px solid var(--primary); cursor: pointer;
+}
+.big-btn.primary { background: var(--primary); color: var(--primary-text); }
+.big-btn.secondary { background: transparent; color: var(--text); }
+.big-btn.recording { background: var(--accent); border-color: var(--accent); color: var(--primary-text); }
+.big-btn[aria-disabled="true"] { opacity: .6; cursor: progress; }
+.btn-icon { font-size: 1.1em; }
+.recording .btn-icon { animation: pulse 1s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .3; } }
+@media (prefers-reduced-motion: reduce) { .recording .btn-icon { animation: none; } }
+
+/* Strong, unmistakable keyboard focus */
+:focus-visible { outline: 4px solid var(--focus); outline-offset: 4px; }
+.upload:focus-within label { outline: 4px solid var(--focus); outline-offset: 4px; }
+
+.visually-hidden {
+  position: absolute !important; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
+.hint { color: var(--muted); font-size: 1rem; margin: .4rem 0 0; }
+
+.bird-name { font-family: Georgia, serif; font-size: 2rem; font-weight: 700; margin: 0; }
+.sci-name { font-style: italic; color: var(--muted); margin: 0 0 .75rem; }
+.mnemonic { font-size: 1.35rem; margin: 0 0 .75rem; }
+.confidence { color: var(--muted); }
+#result h2:focus { outline: none; }
+
+.setting { margin-bottom: 1.25rem; }
+.setting input[type="checkbox"] { width: 1.75rem; height: 1.75rem; vertical-align: middle; margin-right: .5rem; accent-color: var(--primary); }
+.setting label { font-weight: 600; font-size: 1.1rem; vertical-align: middle; }
+.setting select { font: inherit; min-height: 3rem; padding: 0 .75rem; margin-left: .5rem; border: 2px solid var(--border); border-radius: .5rem; background: var(--surface); color: var(--text); }
+
+.skip-link { position: absolute; left: -999px; top: .5rem; background: var(--primary); color: var(--primary-text); padding: .75rem 1rem; border-radius: .5rem; z-index: 1; }
+.skip-link:focus { left: .5rem; }
+
+@media (max-width: 30rem) { .big-btn { width: 100%; } .upload { width: 100%; } h1 { font-size: 2rem; } }
+
+/* Results: one block per species, with reference recordings */
+.species { border-top: 2px solid var(--border); padding-top: 1rem; margin-top: 1rem; }
+.species:first-child { border-top: 0; padding-top: 0; margin-top: 0; }
+h3.bird-name { margin: 0; }
+h3.bird-name.small { font-size: 1.5rem; }
+h4 { font-size: 1.1rem; margin: 1rem 0 .5rem; }
+.rec-list { list-style: none; padding: 0; margin: 0; display: grid; gap: .75rem; }
+.rec-btn {
+  font: inherit; font-weight: 700; font-size: 1.05rem; text-align: left;
+  min-height: 3.25rem; width: 100%; padding: .6rem 1rem;
+  background: transparent; color: var(--text);
+  border: 2px solid var(--primary); border-radius: .75rem; cursor: pointer;
+}
+.rec-btn::first-letter { text-transform: uppercase; }
+.rec-btn.playing { background: var(--primary); color: var(--primary-text); }
+.credit { font-size: .9rem; color: var(--muted); margin: .3rem 0 0 .25rem; }
+#result > .actions { margin-top: 1.5rem; }

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Birding by Ear</title>
+  <meta name="description" content="Record or upload a bird call and hear the bird's name and a memory phrase for its song.">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#identify">Skip to recording</a>
+
+  <header>
+    <h1>Birding by Ear</h1>
+    <p class="tagline">Record or upload a bird call. You will hear the bird's name, followed by a memory phrase for its song.</p>
+  </header>
+
+  <main>
+    <!-- One polite live region for all status and results. Screen readers read
+         every change here; nothing is shown only visually. -->
+    <div id="status" class="status" role="status" aria-live="polite" aria-atomic="true">
+      Ready. Press Record to listen for up to 15 seconds, or choose an audio file.
+    </div>
+
+    <section id="identify" aria-labelledby="identify-heading" tabindex="-1">
+      <h2 id="identify-heading">Identify a bird</h2>
+
+      <div class="actions">
+        <button id="record-btn" type="button" class="big-btn primary">
+          <span class="btn-icon" aria-hidden="true">●</span>
+          <span id="record-label">Record</span>
+        </button>
+
+        <div class="upload">
+          <input id="file-input" type="file" accept="audio/*" class="visually-hidden"
+                 aria-describedby="upload-hint">
+          <label for="file-input" class="big-btn secondary">
+            <span class="btn-icon" aria-hidden="true">↑</span>
+            Choose audio file
+          </label>
+          <p id="upload-hint" class="hint">Any common audio format. The first 60 seconds are used.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="result" aria-labelledby="result-heading" hidden>
+      <h2 id="result-heading" tabindex="-1">Result</h2>
+      <div id="result-body"></div>
+      <div class="actions">
+        <button id="replay-btn" type="button" class="big-btn secondary">Say it again</button>
+        <button id="others-btn" type="button" class="big-btn secondary" hidden>Hear other birds</button>
+        <button id="stop-speaking-btn" type="button" class="big-btn secondary">Stop speaking</button>
+      </div>
+    </section>
+
+    <section aria-labelledby="settings-heading">
+      <h2 id="settings-heading">Settings</h2>
+
+      <div class="setting">
+        <input type="checkbox" id="voice-toggle" checked aria-describedby="voice-hint">
+        <label for="voice-toggle">Read results with the app's voice</label>
+        <p id="voice-hint" class="hint">If you use a screen reader, it will also read results. Turn this off if you hear everything twice.</p>
+      </div>
+
+      <div class="setting">
+        <input type="checkbox" id="location-toggle" aria-describedby="location-hint">
+        <label for="location-toggle">Use my approximate location (recommended)</label>
+        <p id="location-hint" class="hint">Makes results much more accurate by ruling out birds that aren't found near you at this time of year. Your location is rounded to about 10 kilometers and is never stored.</p>
+      </div>
+
+      <div class="setting">
+        <label for="rate">Speaking speed</label>
+        <select id="rate">
+          <option value="0.8">Slow</option>
+          <option value="1" selected>Normal</option>
+          <option value="1.25">Fast</option>
+        </select>
+      </div>
+    </section>
+
+    <section aria-labelledby="help-heading">
+      <h2 id="help-heading">How it works</h2>
+      <ul>
+        <li>After you press Record, the app says "get ready", then plays a rising tone and starts listening. A falling tone means it has stopped listening.</li>
+        <li>Press Record again to stop early. Recording stops on its own after 15 seconds.</li>
+        <li>Press Escape at any time to stop the app's voice or a recording that is playing.</li>
+        <li>Reference recordings come from <a href="https://commons.wikimedia.org/">Wikimedia Commons</a>, many originally shared on <a href="https://xeno-canto.org/">xeno-canto</a>. Playing them needs an internet connection.</li>
+        <li>Bird identification by <a href="https://birdnet.cornell.edu/">BirdNET</a>, from the Cornell Lab of Ornithology and Chemnitz University of Technology. Inspired by <a href="https://www.birdability.org/">Birdability</a>.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
